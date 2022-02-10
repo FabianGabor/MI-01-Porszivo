@@ -6,7 +6,7 @@ import com.fabiangabor.porszivo.commands.*;
 import com.fabiangabor.porszivo.datastore.Datastore;
 
 public class Vacuum implements VacuumReceiver {
-    
+
     private final Datastore datastore;
     private VacuumCommand moveLeft;
     private VacuumCommand moveRight;
