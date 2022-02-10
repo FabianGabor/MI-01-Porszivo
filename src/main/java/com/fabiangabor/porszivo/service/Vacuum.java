@@ -61,7 +61,7 @@ public class Vacuum implements VacuumReceiver {
     }
 
     boolean notDone() {
-        return datastore.getDirection() != Direction.STOP || !datastore.getWorld().areAllRoomsClean();
+        return datastore.getDirection() != Direction.STOP || !datastore.allRoomsAreClear();
     }
 
     private void moveToOtherRoom() {

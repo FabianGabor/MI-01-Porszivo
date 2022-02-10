@@ -72,4 +72,8 @@ public class Datastore {
     public void addToCommandHistory(VacuumCommand command) {
         commandHistory.add(command);
     }
+
+    public boolean allRoomsAreClear() {
+        return world.areAllRoomsClean();
+    }
 }
