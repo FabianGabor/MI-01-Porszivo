@@ -1,6 +1,7 @@
 package com.fabiangabor.porszivo;
 
 import com.fabiangabor.porszivo.commands.*;
+import com.fabiangabor.porszivo.service.Vacuum;
 
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
