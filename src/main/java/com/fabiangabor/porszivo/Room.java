@@ -14,4 +14,9 @@ public class Room {
     public void setClean(boolean clean) {
         this.clean = clean;
     }
+
+    @Override
+    public String toString() {
+        return clean + " ";
+    }
 }

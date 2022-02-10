@@ -1,59 +1,126 @@
 package com.fabiangabor.porszivo;
 
+import com.fabiangabor.porszivo.commands.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
-public class Vacuum {
-    private int roomNumber;
-    private final List<Room> rooms;
+public class Vacuum implements VacuumReceiver {
+    private final List<VacuumCommand> commandHistory = new ArrayList<>();
+    private final World world;
+    private int roomNumber = 0;
     private Direction direction = Direction.RIGHT;
+    private int points;
+    private VacuumCommand moveLeft;
+    private VacuumCommand moveRight;
+    private VacuumCommand stop;
+    private VacuumCommand clean;
+    private final boolean silent;
 
-    public Vacuum(List<Room> rooms) {
-        this.rooms = rooms;
+
+    public Vacuum(World world) {
+        this.world = world;
+        this.silent = false;
     }
 
-    public void start(int roomNumber) {
+    public Vacuum(World world, int roomNumber) {
+        this.world = world;
         this.roomNumber = roomNumber;
+        this.silent = false;
+    }
 
-        while (!allRoomsClean()) {
-            clean();
+    public Vacuum(World world, int roomNumber, boolean silent) {
+        this.world = world;
+        this.roomNumber = roomNumber;
+        this.silent = silent;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    @Override
+    public void start() {
+        moveLeft = new VacuumMoveLeft(this);
+        moveRight = new VacuumMoveRight(this);
+        clean = new VacuumClean(this);
+        stop = new VacuumStop(this);
+
+        while (direction != Direction.STOP || !world.areAllRoomsClean()) {
+            if (!world.isRoomClean(roomNumber)) {
+                clean.execute();
+            } else {
+                moveToOtherRoom();
+            }
         }
-        System.out.println("All rooms are clean");
-    }
 
-    private void clean() {
-        if (rooms.get(roomNumber).isClean()) {
-            goToNextRoom();
-            cleanRoom();
+        if (!silent) {
+            System.out.println("All rooms are clean\n");
+            printCommandHistory();
         }
     }
 
-    private void cleanRoom() {
-        System.out.println("Cleaning room " + roomNumber);
-        rooms.get(roomNumber).setClean(true);
-    }
-
-    private void goToNextRoom() {
-        if (direction == Direction.RIGHT && checkInbound()) {
-            direction = Direction.LEFT;
+    private void moveToOtherRoom() {
+        if (direction == Direction.RIGHT && checkRight()) {
+            moveRight.execute();
+        } else if (checkLeft()) {
+            moveLeft.execute();
         } else {
-            if (direction == Direction.LEFT && checkInbound()) {
-                direction = Direction.RIGHT;
-            }
+            stop.execute();
         }
-        System.out.println("Going " + direction.name());
+    }
+
+    private boolean checkRight() {
+        return roomNumber + Direction.RIGHT.getVal() < world.size();
+    }
+
+    private boolean checkLeft() {
+        return roomNumber + Direction.LEFT.getVal() >= 0;
+    }
+
+    @Override
+    public void moveLeft() {
+        direction = Direction.LEFT;
         roomNumber += direction.getVal();
+        commandHistory.add(moveLeft);
+        points--;
+        printDirection();
     }
 
-    private boolean checkInbound() {
-        return (roomNumber + direction.getVal() >= rooms.size() || roomNumber + direction.getVal() < 0);
+    @Override
+    public void moveRight() {
+        direction = Direction.RIGHT;
+        roomNumber += direction.getVal();
+        commandHistory.add(moveRight);
+        points--;
+        printDirection();
     }
 
-    private boolean allRoomsClean() {
-        for (Room room : rooms) {
-            if (!room.isClean()) {
-                return false;
-            }
+    @Override
+    public void clean() {
+        world.getRoom(roomNumber).setClean(true);
+        commandHistory.add(clean);
+        points += 3;
+
+        if (!silent)
+            System.out.println("Cleaning: " + roomNumber);
+    }
+
+    @Override
+    public void stop() {
+        direction = Direction.STOP;
+        commandHistory.add(stop);
+        printDirection();
+    }
+
+    private void printDirection() {
+        if (!silent)
+            System.out.printf("Moving: %d -> %d (%s)%n", roomNumber - direction.getVal(), roomNumber, direction);
+    }
+
+    private void printCommandHistory() {
+        for (VacuumCommand command : commandHistory) {
+            System.out.println(command);
         }
-        return true;
     }
 }

@@ -1,23 +1,28 @@
 package com.fabiangabor.porszivo;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fabiangabor.porszivo.commands.*;
 
-public class App
-{
-    public static void main( String[] args )
-    {
-       List<Room> rooms = initRooms();
-       Vacuum vacuum = new Vacuum(rooms);
-       vacuum.start(1);
-    }
-    
-    private static List initRooms() {
-        Room room1 = new Room(false);
-        Room room2 = new Room(true);
-        List<Room> rooms = new ArrayList<>();
-        rooms.add(room1);
-        rooms.add(room2);
-        return rooms;
+import java.security.NoSuchAlgorithmException;
+import java.util.Random;
+
+public class App {
+    static final int WORLDS = 20;
+    static final int WORLD_SIZE = 10;
+
+    public static void main(String[] args) throws NoSuchAlgorithmException {
+
+        double averagePoints = 0;
+
+        for (int i = 0; i < WORLDS; i++) {
+            World world = new World();
+            world.initWorld(WORLD_SIZE);
+
+            VacuumReceiver vacuum = new Vacuum(world, new Random().nextInt(WORLD_SIZE - 1), true);
+
+            vacuum.start();
+            averagePoints += vacuum.getPoints();
+        }
+
+        System.out.println("Average points: " + averagePoints / WORLDS);
     }
 }
