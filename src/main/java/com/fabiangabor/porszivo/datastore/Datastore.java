@@ -66,8 +66,7 @@ public class Datastore {
     }
 
     public List<VacuumCommand> getCommandHistory() {
-        return commandHistory;
-        //return Collections.unmodifiableList(commandHistory);
+        return Collections.unmodifiableList(commandHistory);
     }
 
     public void addToCommandHistory(VacuumCommand command) {
