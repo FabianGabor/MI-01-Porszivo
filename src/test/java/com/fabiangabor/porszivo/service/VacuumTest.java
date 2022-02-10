@@ -2,6 +2,7 @@ package com.fabiangabor.porszivo.service;
 
 import com.fabiangabor.porszivo.Direction;
 import com.fabiangabor.porszivo.World;
+import com.fabiangabor.porszivo.datastore.Datastore;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
@@ -14,12 +15,14 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.verify;
 
 class VacuumTest {
+    private final World WORLD = new World();
+
     private Vacuum underTest;
 
     @Mock
-    private World world;
+    private Datastore datastore;
     @Mock
-    private Direction direction;
+    private World world;
 
     @BeforeEach
     void setUp() {
@@ -29,9 +32,17 @@ class VacuumTest {
     }
 
     @Test
-    @Disabled
     void testNotDoneShouldReturnTrueWhenDirectionStop() {
-        given(direction).willReturn(Direction.STOP);
+        given(datastore.getDirection()).willReturn(Direction.STOP);
+        given(datastore.allRoomsAreClear()).willReturn(false);
+        boolean result = underTest.notDone();
+        assertTrue(result);
+    }
+
+    @Test
+    void testNotDoneShouldReturnTrueWhenAllRoomsAreClear() {
+        given(datastore.getDirection()).willReturn(Direction.RIGHT);
+        given(datastore.allRoomsAreClear()).willReturn(true);
         boolean result = underTest.notDone();
         assertTrue(result);
     }
