@@ -1,9 +1,14 @@
 package com.fabiangabor.porszivo.service;
 
+import com.fabiangabor.porszivo.commands.VacuumClean;
+import com.fabiangabor.porszivo.commands.VacuumCommand;
+import com.fabiangabor.porszivo.commands.VacuumMoveLeft;
+import com.fabiangabor.porszivo.commands.VacuumMoveRight;
+import com.fabiangabor.porszivo.commands.VacuumReceiver;
+import com.fabiangabor.porszivo.commands.VacuumStop;
+import com.fabiangabor.porszivo.data.Datastore;
 import com.fabiangabor.porszivo.domain.Direction;
 import com.fabiangabor.porszivo.domain.World;
-import com.fabiangabor.porszivo.commands.*;
-import com.fabiangabor.porszivo.data.Datastore;
 
 public class VacuumController {
     private final Datastore datastore;

@@ -1,7 +1,7 @@
 package com.fabiangabor.porszivo.commands;
 
-import com.fabiangabor.porszivo.domain.Direction;
 import com.fabiangabor.porszivo.data.Datastore;
+import com.fabiangabor.porszivo.domain.Direction;
 
 public class VacuumMoveRight implements VacuumCommand {
     private final VacuumReceiver vacuumReceiver;

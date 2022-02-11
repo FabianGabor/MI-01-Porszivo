@@ -1,12 +1,13 @@
 package com.fabiangabor.porszivo.data;
 
-import com.fabiangabor.porszivo.domain.Direction;
-import com.fabiangabor.porszivo.domain.World;
-import com.fabiangabor.porszivo.commands.VacuumCommand;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import com.fabiangabor.porszivo.commands.VacuumCommand;
+import com.fabiangabor.porszivo.domain.Direction;
+import com.fabiangabor.porszivo.domain.World;
+
 
 public class Datastore {
     private final World world;

@@ -20,7 +20,9 @@
 		<org.mockito.version>2.23.4</org.mockito.version>
 		<surfire.version>2.22.1</surfire.version>
 		<jacoco.version>0.8.7</jacoco.version>
-		<assertj.version>3.22.0</assertj.version>
+
+		<maven.checkstyle.version>3.1.2</maven.checkstyle.version>
+		<puppycrawl.version>8.44</puppycrawl.version>
 	</properties>
 
 	<dependencyManagement>
@@ -147,5 +149,29 @@
 				</plugin>
 			</plugins>
 		</pluginManagement>
+
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-checkstyle-plugin</artifactId>
+				<version>${maven.checkstyle.version}</version>
+				<configuration>
+					<configLocation>../../checkstyle/checkstyle_rules.xml</configLocation>
+					<propertiesLocation>../../checkstyle/checkstyle_maven.properties</propertiesLocation>
+					<consoleOutput>true</consoleOutput>
+					<failsOnError>true</failsOnError>
+					<failOnViolation>true</failOnViolation>
+					<violationSeverity>warning</violationSeverity>
+					<linkXRef>false</linkXRef>
+				</configuration>
+				<dependencies>
+					<dependency>
+						<groupId>com.puppycrawl.tools</groupId>
+						<artifactId>checkstyle</artifactId>
+						<version>${puppycrawl.version}</version>
+					</dependency>
+				</dependencies>
+			</plugin>
+		</plugins>
 	</build>
 </project>

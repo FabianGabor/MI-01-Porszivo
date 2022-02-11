@@ -1,8 +1,8 @@
 package com.fabiangabor.porszivo.data;
 
-import com.fabiangabor.porszivo.service.VacuumController;
-
 import java.util.List;
+
+import com.fabiangabor.porszivo.service.VacuumController;
 
 public class Points {
     private int amount;

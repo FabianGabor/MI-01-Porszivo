@@ -1,11 +1,14 @@
 package com.fabiangabor.porszivo.service;
 
-import com.fabiangabor.porszivo.domain.Direction;
-import com.fabiangabor.porszivo.commands.*;
+import com.fabiangabor.porszivo.commands.VacuumCommand;
+import com.fabiangabor.porszivo.commands.VacuumReceiver;
 import com.fabiangabor.porszivo.data.Datastore;
+import com.fabiangabor.porszivo.domain.Direction;
 
 public class Vacuum implements VacuumReceiver {
 
+    public static final int DECREASE_POINTS_AMOUNT = 1;
+    public static final int INCREASE_POINTS_AMOUNT = 3;
     private final boolean silent;
 
     public Vacuum() {
@@ -35,7 +38,7 @@ public class Vacuum implements VacuumReceiver {
         datastore.addToCommandHistory(command);
         datastore.addToDirectionHistory(command);
         datastore.increaseRoomNumber(direction.getVal());
-        datastore.decreasePoints(1);
+        datastore.decreasePoints(DECREASE_POINTS_AMOUNT);
     }
 
     @Override
@@ -43,7 +46,7 @@ public class Vacuum implements VacuumReceiver {
         datastore.getWorld().getRoom(datastore.getRoomNumber()).setClean(true);
         datastore.addToCommandHistory(command);
         datastore.addToDirectionHistory(command);
-        datastore.increasePoints(3);
+        datastore.increasePoints(INCREASE_POINTS_AMOUNT);
     }
 
     @Override
