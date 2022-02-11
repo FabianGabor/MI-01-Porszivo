@@ -16,6 +16,7 @@ import java.util.Random;
 public class App {
     static final int WORLDS = 20;
     static final int WORLD_SIZE = 10;
+    static final boolean SILENT = false;
 
     public static void main(String[] args) {
 
@@ -27,7 +28,7 @@ public class App {
 
             consoleView.println(world);
 
-            VacuumReceiver vacuum = new Vacuum(false);
+            VacuumReceiver vacuum = new Vacuum(SILENT);
             VacuumController controller = new VacuumController(world, vacuum, new Random().nextInt(WORLD_SIZE - 1));
             controllers.add(controller);
 
