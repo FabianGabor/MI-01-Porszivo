@@ -14,8 +14,8 @@ import java.util.List;
 import java.util.Random;
 
 public class App {
-    static final int WORLDS = 1;
-    static final int WORLD_SIZE = 3;
+    static final int WORLDS = 20;
+    static final int WORLD_SIZE = 10;
 
     public static void main(String[] args) {
 

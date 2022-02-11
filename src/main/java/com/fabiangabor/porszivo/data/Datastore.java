@@ -81,7 +81,7 @@ public class Datastore {
     public void addToDirectionHistory(String command) {
         directionHistory.add(String.format("%s: %d",
                 command,
-                roomNumber
+                roomNumber +1
         ));
     }
 
@@ -89,12 +89,12 @@ public class Datastore {
         if (command.toString().equals("CLEAN") || command.toString().equals("STOP")) {
             directionHistory.add(String.format("%s: %d",
                     command,
-                    roomNumber
+                    roomNumber +1
             ));
         } else {
             directionHistory.add(String.format("MOVE:  %d -> %d (%s)",
-                    roomNumber,
-                    roomNumber + direction.getVal(),
+                    roomNumber +1,
+                    roomNumber + direction.getVal() +1,
                     direction
             ));
         }
