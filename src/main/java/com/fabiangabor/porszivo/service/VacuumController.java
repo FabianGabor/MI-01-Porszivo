@@ -1,12 +1,11 @@
 package com.fabiangabor.porszivo.service;
 
-import com.fabiangabor.porszivo.Direction;
-import com.fabiangabor.porszivo.world.World;
+import com.fabiangabor.porszivo.domain.Direction;
+import com.fabiangabor.porszivo.domain.World;
 import com.fabiangabor.porszivo.commands.*;
-import com.fabiangabor.porszivo.datastore.Datastore;
+import com.fabiangabor.porszivo.data.Datastore;
 
 public class VacuumController {
-    private final VacuumReceiver vacuum;
     private final Datastore datastore;
 
     private final VacuumCommand moveLeft;
@@ -15,8 +14,6 @@ public class VacuumController {
     private final VacuumCommand clean;
 
     public VacuumController(World world, VacuumReceiver vacuum) {
-        this.vacuum = vacuum;
-
         this.datastore = new Datastore(world);
         this.datastore.setRoomNumber(0);
 
@@ -31,12 +28,13 @@ public class VacuumController {
         this.datastore.setRoomNumber(roomNumber);
     }
 
-    public void start() {
-        cleanIfNeededOrStopIfAllRoomsAreClean();
+    public Datastore getDatastore() {
+        return datastore;
+    }
 
-        if (!vacuum.isSilent()) {
-            printCommandHistory();
-        }
+    public void start() {
+        datastore.addToDirectionHistory("START");
+        cleanIfNeededOrStopIfAllRoomsAreClean();
     }
 
     private void cleanIfNeededOrStopIfAllRoomsAreClean() {
@@ -69,20 +67,6 @@ public class VacuumController {
 
     private boolean checkLeft() {
         return datastore.getRoomNumber() + Direction.LEFT.getVal() >= 0;
-    }
-
-    private void printDirection() {
-        if (!vacuum.isSilent())
-            System.out.printf("Moving: %d -> %d (%s)%n",
-                    datastore.getRoomNumber() - datastore.getDirection().getVal(),
-                    datastore.getRoomNumber(),
-                    datastore.getDirection());
-    }
-
-    private void printCommandHistory() {
-        for (VacuumCommand command : datastore.getCommandHistory()) {
-            System.out.println(command);
-        }
     }
 
     public int getPoints() {

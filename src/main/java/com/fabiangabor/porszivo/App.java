@@ -1,11 +1,16 @@
 package com.fabiangabor.porszivo;
 
 import com.fabiangabor.porszivo.commands.*;
+import com.fabiangabor.porszivo.data.Points;
 import com.fabiangabor.porszivo.service.Vacuum;
 import com.fabiangabor.porszivo.service.VacuumController;
-import com.fabiangabor.porszivo.world.World;
-import com.fabiangabor.porszivo.world.WorldFactory;
+import com.fabiangabor.porszivo.domain.World;
+import com.fabiangabor.porszivo.domain.WorldFactory;
+import com.fabiangabor.porszivo.view.ConsoleView;
+import com.fabiangabor.porszivo.view.View;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class App {
@@ -14,27 +19,25 @@ public class App {
 
     public static void main(String[] args) {
 
-        double averagePoints = 0;
+        View consoleView = new ConsoleView();
+        List<VacuumController> controllers = new ArrayList<>();
 
         for (int i = 0; i < WORLDS; i++) {
-            //World world = new WorldFactory().create(WORLD_SIZE);
-            World world = new World();
-            Room room1 = new Room(false);
-            Room room2 = new Room(false);
-            world.addRoom(room1);
-            world.addRoom(room2);
+            World world = new WorldFactory().create(WORLD_SIZE);
 
-            System.out.println(world);
+            consoleView.println(world);
 
             VacuumReceiver vacuum = new Vacuum(false);
             VacuumController controller = new VacuumController(world, vacuum, new Random().nextInt(WORLD_SIZE - 1));
+            controllers.add(controller);
 
             controller.start();
-            averagePoints += controller.getPoints();
 
-            System.out.println(world);
+            consoleView.printDirection(controller.getDatastore());
+
+            consoleView.println(world);
         }
 
-        System.out.println("Average points: " + averagePoints / WORLDS);
+        consoleView.println("Average points: " + Points.calcAveragePoints(controllers));
     }
 }

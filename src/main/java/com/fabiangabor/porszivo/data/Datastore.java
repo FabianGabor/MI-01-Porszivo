@@ -1,7 +1,7 @@
-package com.fabiangabor.porszivo.datastore;
+package com.fabiangabor.porszivo.data;
 
-import com.fabiangabor.porszivo.Direction;
-import com.fabiangabor.porszivo.world.World;
+import com.fabiangabor.porszivo.domain.Direction;
+import com.fabiangabor.porszivo.domain.World;
 import com.fabiangabor.porszivo.commands.VacuumCommand;
 
 import java.util.ArrayList;
@@ -12,21 +12,22 @@ public class Datastore {
     private final World world;
     private Direction direction;
     private int roomNumber;
-    private int points;
+    private final Points points;
     private final List<VacuumCommand> commandHistory;
+    private final List<String> directionHistory;
 
     public Datastore(World world) {
         this.world = world;
         this.direction = Direction.RIGHT;
-        this.points = 0;
+        this.roomNumber = 0;
+        this.points = new Points();
         commandHistory = new ArrayList<>();
+        directionHistory = new ArrayList<>();
     }
 
     public Datastore(World world, int roomNumber) {
-        this.world = world;
-        this.direction = Direction.RIGHT;
+        this(world);
         this.roomNumber = roomNumber;
-        commandHistory = new ArrayList<>();
     }
 
     public World getWorld() {
@@ -54,15 +55,15 @@ public class Datastore {
     }
 
     public int getPoints() {
-        return points;
+        return points.getAmount();
     }
 
     public void increasePoints(int amount) {
-        points += amount;
+        points.increasePoints(amount);
     }
 
     public void decreasePoints(int amount) {
-        points -= amount;
+        points.decreasePoints(amount);
     }
 
     public List<VacuumCommand> getCommandHistory() {
@@ -71,6 +72,32 @@ public class Datastore {
 
     public void addToCommandHistory(VacuumCommand command) {
         commandHistory.add(command);
+    }
+
+    public List<String> getDirectionHistory() {
+        return Collections.unmodifiableList(directionHistory);
+    }
+
+    public void addToDirectionHistory(String command) {
+        directionHistory.add(String.format("%s: %d",
+                command,
+                roomNumber
+        ));
+    }
+
+    public void addToDirectionHistory(VacuumCommand command) {
+        if (command.toString().equals("CLEAN") || command.toString().equals("STOP")) {
+            directionHistory.add(String.format("%s: %d",
+                    command,
+                    roomNumber
+            ));
+        } else {
+            directionHistory.add(String.format("MOVE:  %d -> %d (%s)",
+                    roomNumber,
+                    roomNumber + direction.getVal(),
+                    direction
+            ));
+        }
     }
 
     public boolean allRoomsAreClear() {

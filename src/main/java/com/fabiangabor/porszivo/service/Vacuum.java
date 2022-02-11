@@ -1,8 +1,8 @@
 package com.fabiangabor.porszivo.service;
 
-import com.fabiangabor.porszivo.Direction;
+import com.fabiangabor.porszivo.domain.Direction;
 import com.fabiangabor.porszivo.commands.*;
-import com.fabiangabor.porszivo.datastore.Datastore;
+import com.fabiangabor.porszivo.data.Datastore;
 
 public class Vacuum implements VacuumReceiver {
 
@@ -24,6 +24,7 @@ public class Vacuum implements VacuumReceiver {
     public void moveLeft(VacuumCommand command, Datastore datastore, Direction direction) {
         datastore.setDirection(direction);
         datastore.addToCommandHistory(command);
+        datastore.addToDirectionHistory(command);
         datastore.increaseRoomNumber(direction.getVal());
         datastore.decreasePoints(1);
     }
@@ -32,6 +33,7 @@ public class Vacuum implements VacuumReceiver {
     public void moveRight(VacuumCommand command, Datastore datastore, Direction direction) {
         datastore.setDirection(direction);
         datastore.addToCommandHistory(command);
+        datastore.addToDirectionHistory(command);
         datastore.increaseRoomNumber(direction.getVal());
         datastore.decreasePoints(1);
     }
@@ -40,6 +42,7 @@ public class Vacuum implements VacuumReceiver {
     public void clean(VacuumCommand command, Datastore datastore) {
         datastore.getWorld().getRoom(datastore.getRoomNumber()).setClean(true);
         datastore.addToCommandHistory(command);
+        datastore.addToDirectionHistory(command);
         datastore.increasePoints(3);
     }
 
@@ -47,5 +50,6 @@ public class Vacuum implements VacuumReceiver {
     public void stop(VacuumCommand command, Datastore datastore, Direction direction) {
         datastore.setDirection(direction);
         datastore.addToCommandHistory(command);
+        datastore.addToDirectionHistory(command);
     }
 }

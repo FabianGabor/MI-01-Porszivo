@@ -1,7 +1,7 @@
 package com.fabiangabor.porszivo.commands;
 
-import com.fabiangabor.porszivo.Direction;
-import com.fabiangabor.porszivo.datastore.Datastore;
+import com.fabiangabor.porszivo.domain.Direction;
+import com.fabiangabor.porszivo.data.Datastore;
 
 public interface VacuumReceiver {
     void moveLeft(VacuumCommand command, Datastore datastore, Direction direction);

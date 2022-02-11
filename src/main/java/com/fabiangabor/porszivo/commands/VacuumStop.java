@@ -1,7 +1,7 @@
 package com.fabiangabor.porszivo.commands;
 
-import com.fabiangabor.porszivo.Direction;
-import com.fabiangabor.porszivo.datastore.Datastore;
+import com.fabiangabor.porszivo.domain.Direction;
+import com.fabiangabor.porszivo.data.Datastore;
 
 public class VacuumStop implements VacuumCommand{
     private final VacuumReceiver vacuumReceiver;

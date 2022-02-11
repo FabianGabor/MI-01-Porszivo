@@ -1,4 +1,4 @@
-package com.fabiangabor.porszivo;
+package com.fabiangabor.porszivo.domain;
 
 public class Room {
     private boolean clean;

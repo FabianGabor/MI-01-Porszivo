@@ -1,6 +1,4 @@
-package com.fabiangabor.porszivo.world;
-
-import com.fabiangabor.porszivo.Room;
+package com.fabiangabor.porszivo.domain;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;

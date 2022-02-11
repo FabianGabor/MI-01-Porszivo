@@ -1,4 +1,4 @@
-package com.fabiangabor.porszivo.world;
+package com.fabiangabor.porszivo.domain;
 
 public class WorldFactory implements Factory{
     @Override

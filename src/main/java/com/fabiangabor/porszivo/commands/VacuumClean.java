@@ -1,6 +1,6 @@
 package com.fabiangabor.porszivo.commands;
 
-import com.fabiangabor.porszivo.datastore.Datastore;
+import com.fabiangabor.porszivo.data.Datastore;
 
 public class VacuumClean implements VacuumCommand {
     private final VacuumReceiver vacuumReceiver;
