@@ -1,17 +1,20 @@
 package com.fabiangabor.porszivo.commands;
 
 import com.fabiangabor.porszivo.Direction;
+import com.fabiangabor.porszivo.datastore.Datastore;
 
 public class VacuumStop implements VacuumCommand{
     private final VacuumReceiver vacuumReceiver;
+    private final Datastore datastore;
 
-    public VacuumStop(VacuumReceiver vacuumReceiver) {
+    public VacuumStop(VacuumReceiver vacuumReceiver, Datastore datastore) {
         this.vacuumReceiver = vacuumReceiver;
+        this.datastore = datastore;
     }
 
     @Override
     public void execute() {
-        vacuumReceiver.stop();
+        vacuumReceiver.stop(this, datastore, Direction.STOP);
     }
 
     @Override

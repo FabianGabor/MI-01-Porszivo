@@ -1,7 +1,7 @@
 package com.fabiangabor.porszivo.datastore;
 
 import com.fabiangabor.porszivo.Direction;
-import com.fabiangabor.porszivo.World;
+import com.fabiangabor.porszivo.world.World;
 import com.fabiangabor.porszivo.commands.VacuumCommand;
 
 import java.util.ArrayList;

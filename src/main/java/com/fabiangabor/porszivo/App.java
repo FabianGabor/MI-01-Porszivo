@@ -2,26 +2,37 @@ package com.fabiangabor.porszivo;
 
 import com.fabiangabor.porszivo.commands.*;
 import com.fabiangabor.porszivo.service.Vacuum;
+import com.fabiangabor.porszivo.service.VacuumController;
+import com.fabiangabor.porszivo.world.World;
+import com.fabiangabor.porszivo.world.WorldFactory;
 
-import java.security.NoSuchAlgorithmException;
 import java.util.Random;
 
 public class App {
-    static final int WORLDS = 20;
-    static final int WORLD_SIZE = 10;
+    static final int WORLDS = 1;
+    static final int WORLD_SIZE = 3;
 
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) {
 
         double averagePoints = 0;
 
         for (int i = 0; i < WORLDS; i++) {
+            //World world = new WorldFactory().create(WORLD_SIZE);
             World world = new World();
-            world.initWorld(WORLD_SIZE);
+            Room room1 = new Room(false);
+            Room room2 = new Room(false);
+            world.addRoom(room1);
+            world.addRoom(room2);
 
-            VacuumReceiver vacuum = new Vacuum(world, new Random().nextInt(WORLD_SIZE - 1), true);
+            System.out.println(world);
 
-            vacuum.start();
-            averagePoints += vacuum.getPoints();
+            VacuumReceiver vacuum = new Vacuum(false);
+            VacuumController controller = new VacuumController(world, vacuum, new Random().nextInt(WORLD_SIZE - 1));
+
+            controller.start();
+            averagePoints += controller.getPoints();
+
+            System.out.println(world);
         }
 
         System.out.println("Average points: " + averagePoints / WORLDS);
