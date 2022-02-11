@@ -1,29 +1,43 @@
 package com.fabiangabor.porszivo;
 
 import com.fabiangabor.porszivo.commands.*;
+import com.fabiangabor.porszivo.data.Points;
 import com.fabiangabor.porszivo.service.Vacuum;
+import com.fabiangabor.porszivo.service.VacuumController;
+import com.fabiangabor.porszivo.domain.World;
+import com.fabiangabor.porszivo.domain.WorldFactory;
+import com.fabiangabor.porszivo.view.ConsoleView;
+import com.fabiangabor.porszivo.view.View;
 
-import java.security.NoSuchAlgorithmException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class App {
-    static final int WORLDS = 20;
-    static final int WORLD_SIZE = 10;
+    static final int WORLDS = 1;
+    static final int WORLD_SIZE = 3;
 
-    public static void main(String[] args) throws NoSuchAlgorithmException {
+    public static void main(String[] args) {
 
-        double averagePoints = 0;
+        View consoleView = new ConsoleView();
+        List<VacuumController> controllers = new ArrayList<>();
 
         for (int i = 0; i < WORLDS; i++) {
-            World world = new World();
-            world.initWorld(WORLD_SIZE);
+            World world = new WorldFactory().create(WORLD_SIZE);
 
-            VacuumReceiver vacuum = new Vacuum(world, new Random().nextInt(WORLD_SIZE - 1), true);
+            consoleView.println(world);
 
-            vacuum.start();
-            averagePoints += vacuum.getPoints();
+            VacuumReceiver vacuum = new Vacuum(false);
+            VacuumController controller = new VacuumController(world, vacuum, new Random().nextInt(WORLD_SIZE - 1));
+            controllers.add(controller);
+
+            controller.start();
+
+            consoleView.printDirection(controller.getDatastore());
+
+            consoleView.println(world);
         }
 
-        System.out.println("Average points: " + averagePoints / WORLDS);
+        consoleView.println("Average points: " + Points.calcAveragePoints(controllers));
     }
 }

@@ -1,4 +1,4 @@
-package com.fabiangabor.porszivo;
+package com.fabiangabor.porszivo.domain;
 
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
@@ -21,7 +21,7 @@ public class World {
         rooms.add(room);
     }
 
-    public int size() {
+    public int getSize() {
         return rooms.size();
     }
 
@@ -38,12 +38,16 @@ public class World {
         return getRoom(i).isClean();
     }
 
-    public void initWorld(int n) throws NoSuchAlgorithmException {
-        Random rand = SecureRandom.getInstanceStrong();
-
-        for (int i = 0; i < n; i++) {
-            Room room = new Room(rand.nextBoolean());
-            addRoom(room);
+    void initWorld(int n) {
+        Random rand;
+        try {
+            rand = SecureRandom.getInstanceStrong();
+            for (int i = 0; i < n; i++) {
+                Room room = new Room(rand.nextBoolean());
+                addRoom(room);
+            }
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace();
         }
     }
 
