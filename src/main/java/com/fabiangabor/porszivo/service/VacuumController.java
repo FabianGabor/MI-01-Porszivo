@@ -8,28 +8,22 @@ import com.fabiangabor.porszivo.commands.VacuumReceiver;
 import com.fabiangabor.porszivo.commands.VacuumStop;
 import com.fabiangabor.porszivo.data.Datastore;
 import com.fabiangabor.porszivo.domain.Direction;
-import com.fabiangabor.porszivo.domain.World;
 
 public class VacuumController {
-    private final Datastore datastore;
+    private Datastore datastore;
 
     private final VacuumCommand moveLeft;
     private final VacuumCommand moveRight;
     private final VacuumCommand stop;
     private final VacuumCommand clean;
 
-    public VacuumController(World world, VacuumReceiver vacuum) {
-        this.datastore = new Datastore(world);
-        this.datastore.setRoomNumber(0);
-
+    public VacuumController(VacuumReceiver vacuum, Datastore datastore, int roomNumber) {
         moveLeft = new VacuumMoveLeft(vacuum, datastore);
         moveRight = new VacuumMoveRight(vacuum, datastore);
         clean = new VacuumClean(vacuum, datastore);
         stop = new VacuumStop(vacuum, datastore);
-    }
 
-    public VacuumController(World world, VacuumReceiver vacuum, int roomNumber) {
-        this(world, vacuum);
+        this.datastore = datastore;
         this.datastore.setRoomNumber(roomNumber);
     }
 
