@@ -8,16 +8,23 @@ import com.fabiangabor.porszivo.commands.VacuumReceiver;
 import com.fabiangabor.porszivo.commands.VacuumStop;
 import com.fabiangabor.porszivo.data.Datastore;
 import com.fabiangabor.porszivo.domain.Direction;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
+import javax.inject.Inject;
+
+@Component
+@Scope("prototype")
 public class VacuumController {
-    private Datastore datastore;
+    private final Datastore datastore;
 
     private final VacuumCommand moveLeft;
     private final VacuumCommand moveRight;
     private final VacuumCommand stop;
     private final VacuumCommand clean;
 
-    public VacuumController(VacuumReceiver vacuum, Datastore datastore, int roomNumber) {
+    public VacuumController(VacuumReceiver vacuum, Datastore datastore, @Qualifier("random") int roomNumber) {
         moveLeft = new VacuumMoveLeft(vacuum, datastore);
         moveRight = new VacuumMoveRight(vacuum, datastore);
         clean = new VacuumClean(vacuum, datastore);

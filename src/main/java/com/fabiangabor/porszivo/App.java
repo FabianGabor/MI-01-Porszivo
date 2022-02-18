@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
-
 public class App {
 
     @Inject private int worldsCount;

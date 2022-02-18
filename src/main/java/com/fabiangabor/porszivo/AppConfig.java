@@ -12,9 +12,11 @@ import com.fabiangabor.porszivo.view.LoggerView;
 import com.fabiangabor.porszivo.view.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.*;
 
+import javax.inject.Named;
 import java.util.Random;
 
 @Configuration
@@ -32,6 +34,15 @@ public class AppConfig {
 
     @Value("#{T(Integer).parseInt('${worldSize}')}")
     int worldSize;
+
+    private final Random rand = new Random();
+
+    @Bean
+    @Scope("prototype")
+    @Qualifier("random")
+    int random() {
+        return rand.nextInt(worldSize - 1);
+    }
 
     @Bean boolean isSilent() {
         return silent;
@@ -54,19 +65,16 @@ public class AppConfig {
     }
 
     @Bean
-    @Scope("prototype")
     VacuumReceiver vacuum() {
         return new Vacuum(silent);
     }
 
     @Bean
-    @Scope("prototype")
     World worldFactory(int worldSize) {
         return new WorldFactory().create(worldSize);
     }
 
     @Bean
-    @Scope("prototype")
     Datastore datastore() {
         return new Datastore(worldFactory(worldSize));
     }
@@ -74,12 +82,10 @@ public class AppConfig {
     @Bean
     @Scope("prototype")
     VacuumController controller() {
-        return new VacuumController(vacuum(), datastore(),
-                new Random().nextInt(worldSize - 1));
+        return new VacuumController(vacuum(), datastore(), random());
     }
 
     @Bean
-    @Scope("prototype")
     Points points() {
         return new Points();
     }
