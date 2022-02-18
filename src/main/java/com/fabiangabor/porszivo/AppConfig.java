@@ -70,13 +70,14 @@ public class AppConfig {
     }
 
     @Bean
+    @Scope("prototype")
     World worldFactory(int worldSize) {
         return new WorldFactory().create(worldSize);
     }
 
     @Bean
     Datastore datastore() {
-        return new Datastore(worldFactory(worldSize));
+        return new Datastore(new WorldFactory().create(worldSize));
     }
 
     @Bean
