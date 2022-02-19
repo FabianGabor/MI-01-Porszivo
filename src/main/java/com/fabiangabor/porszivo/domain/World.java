@@ -1,11 +1,16 @@
 package com.fabiangabor.porszivo.domain;
 
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+
 import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+@Component
+@Scope("prototype")
 public class World {
     private final List<Room> rooms;
 

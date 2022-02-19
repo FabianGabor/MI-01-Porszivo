@@ -2,15 +2,11 @@ package com.fabiangabor.porszivo;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import com.fabiangabor.porszivo.commands.VacuumReceiver;
 import com.fabiangabor.porszivo.data.Datastore;
 import com.fabiangabor.porszivo.data.MemoryDatastore;
 import com.fabiangabor.porszivo.data.Points;
-import com.fabiangabor.porszivo.domain.World;
-import com.fabiangabor.porszivo.domain.WorldFactory;
-import com.fabiangabor.porszivo.service.Vacuum;
 import com.fabiangabor.porszivo.service.VacuumController;
 import com.fabiangabor.porszivo.view.LogView;
 import com.fabiangabor.porszivo.view.View;
@@ -28,8 +24,7 @@ public class App {
         View view = new LogView();
         List<VacuumController> controllers = new ArrayList<>();
 
-        for (int i = 0; i < WORLDS; i++) {
-            World world = new WorldFactory().create(WORLD_SIZE);
+    private static final Logger LOG = LoggerFactory.getLogger(App.class);
 
             view.println(world);
 
