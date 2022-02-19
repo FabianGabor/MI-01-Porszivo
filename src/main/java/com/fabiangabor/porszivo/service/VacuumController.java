@@ -1,15 +1,8 @@
 package com.fabiangabor.porszivo.service;
 
-import com.fabiangabor.porszivo.commands.VacuumClean;
-import com.fabiangabor.porszivo.commands.VacuumCommand;
-import com.fabiangabor.porszivo.commands.VacuumMoveLeft;
-import com.fabiangabor.porszivo.commands.VacuumMoveRight;
-import com.fabiangabor.porszivo.commands.VacuumReceiver;
-import com.fabiangabor.porszivo.commands.VacuumStop;
+import com.fabiangabor.porszivo.commands.*;
 import com.fabiangabor.porszivo.data.Datastore;
-import com.fabiangabor.porszivo.data.MemoryDatastore;
 import com.fabiangabor.porszivo.domain.Direction;
-import com.fabiangabor.porszivo.domain.World;
 
 public class VacuumController {
     private final Datastore datastore;
@@ -19,7 +12,7 @@ public class VacuumController {
     private final VacuumCommand stop;
     private final VacuumCommand clean;
 
-    public VacuumController(World world, VacuumReceiver vacuum, Datastore dataStore) {
+    public VacuumController(VacuumReceiver vacuum, Datastore dataStore) {
         this.datastore = dataStore;
         this.datastore.setRoomNumber(0);
 
@@ -29,8 +22,8 @@ public class VacuumController {
         stop = new VacuumStop(vacuum, datastore);
     }
 
-    public VacuumController(World world, VacuumReceiver vacuum, Datastore dataStore, int roomNumber) {
-        this(world, vacuum, dataStore);
+    public VacuumController(VacuumReceiver vacuum, Datastore dataStore, int roomNumber) {
+        this(vacuum, dataStore);
         this.datastore.setRoomNumber(roomNumber);
     }
 

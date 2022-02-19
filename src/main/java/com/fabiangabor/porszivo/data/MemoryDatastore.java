@@ -8,7 +8,6 @@ import com.fabiangabor.porszivo.commands.VacuumCommand;
 import com.fabiangabor.porszivo.domain.Direction;
 import com.fabiangabor.porszivo.domain.World;
 
-
 public class MemoryDatastore implements Datastore {
     private final World world;
     private Direction direction;
