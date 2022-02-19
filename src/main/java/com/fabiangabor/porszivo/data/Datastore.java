@@ -1,107 +1,41 @@
 package com.fabiangabor.porszivo.data;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 import com.fabiangabor.porszivo.commands.VacuumCommand;
 import com.fabiangabor.porszivo.domain.Direction;
 import com.fabiangabor.porszivo.domain.World;
 
+import java.util.List;
 
-public class Datastore {
-    private final World world;
-    private Direction direction;
-    private int roomNumber;
-    private final Points points;
-    private final List<VacuumCommand> commandHistory;
-    private final List<String> directionHistory;
+public interface Datastore {
+    World getWorld();
 
-    public Datastore(World world) {
-        this.world = world;
-        this.direction = Direction.RIGHT;
-        this.roomNumber = 0;
-        this.points = new Points();
-        commandHistory = new ArrayList<>();
-        directionHistory = new ArrayList<>();
-    }
+    Direction getDirection();
 
-    public Datastore(World world, int roomNumber) {
-        this(world);
-        this.roomNumber = roomNumber;
-    }
+    void setDirection(Direction direction);
 
-    public World getWorld() {
-        return world;
-    }
+    int getRoomNumber();
 
-    public Direction getDirection() {
-        return direction;
-    }
+    void setRoomNumber(int roomNumber);
 
-    public void setDirection(Direction direction) {
-        this.direction = direction;
-    }
+    void increaseRoomNumber(int roomNumber);
 
-    public int getRoomNumber() {
-        return roomNumber;
-    }
+    int getPoints();
 
-    public void setRoomNumber(int roomNumber) {
-        this.roomNumber = roomNumber;
-    }
+    void increasePoints(int amount);
 
-    public void increaseRoomNumber(int roomNumber) {
-        this.roomNumber += roomNumber;
-    }
+    void decreasePoints(int amount);
 
-    public int getPoints() {
-        return points.getAmount();
-    }
+    List<VacuumCommand> getCommandHistory();
 
-    public void increasePoints(int amount) {
-        points.increasePoints(amount);
-    }
+    void addToCommandHistory(VacuumCommand command);
 
-    public void decreasePoints(int amount) {
-        points.decreasePoints(amount);
-    }
+    List<String> getDirectionHistory();
 
-    public List<VacuumCommand> getCommandHistory() {
-        return Collections.unmodifiableList(commandHistory);
-    }
+    void addToDirectionHistory(String command);
 
-    public void addToCommandHistory(VacuumCommand command) {
-        commandHistory.add(command);
-    }
+    void addToDirectionHistory(VacuumCommand command);
 
-    public List<String> getDirectionHistory() {
-        return Collections.unmodifiableList(directionHistory);
-    }
+    boolean allRoomsAreClear();
 
-    public void addToDirectionHistory(String command) {
-        directionHistory.add(String.format("%s: %d",
-                command,
-                roomNumber +1
-        ));
-    }
-
-    public void addToDirectionHistory(VacuumCommand command) {
-        if (command.toString().equals("CLEAN") || command.toString().equals("STOP")) {
-            directionHistory.add(String.format("%s: %d",
-                    command,
-                    roomNumber +1
-            ));
-        } else {
-            directionHistory.add(String.format("MOVE:  %d -> %d (%s)",
-                    roomNumber +1,
-                    roomNumber + direction.getVal() +1,
-                    direction
-            ));
-        }
-    }
-
-    public boolean allRoomsAreClear() {
-        return world.areAllRoomsClean();
-    }
+    void setRoomClean();
 }

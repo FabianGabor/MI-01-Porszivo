@@ -43,7 +43,7 @@ public class Vacuum implements VacuumReceiver {
 
     @Override
     public void clean(VacuumCommand command, Datastore datastore) {
-        datastore.getWorld().getRoom(datastore.getRoomNumber()).setClean(true);
+        datastore.setRoomClean();
         datastore.addToCommandHistory(command);
         datastore.addToDirectionHistory(command);
         datastore.increasePoints(INCREASE_POINTS_AMOUNT);
