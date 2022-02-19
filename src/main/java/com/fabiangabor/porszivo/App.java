@@ -10,15 +10,14 @@ import com.fabiangabor.porszivo.data.Points;
 import com.fabiangabor.porszivo.service.VacuumController;
 import com.fabiangabor.porszivo.view.LogView;
 import com.fabiangabor.porszivo.view.View;
-import org.springframework.context.annotation.Scope;
 
 import javax.inject.Inject;
 
 
 public class App {
     static final int WORLDS = 2;
-    static final int WORLD_SIZE = 5;
-    static final boolean SILENT = false;
+    static final int WORLD_SIZE = 3;
+    static final boolean SILENT = true;
 
     public static void main(String[] args) {
         View view = new LogView();
@@ -41,24 +40,20 @@ public class App {
         view.println("Average points: " + Points.calcAveragePoints(controllers));
     }
 
-    @Inject View view;
-    @Inject VacuumController controller;
-    @Inject VacuumReceiver vacuum;
-    Datastore datastore;
-    @Inject int roomNumber;
+    @Inject boolean isSilent;
 
-    void play() {
+    void play(VacuumController controller, View view) {
+        if (!isSilent) {
+            view.println("Rooms before: " + controller.getDatastore().getWorld());
+        }
 
-        List<VacuumController> controllers = new ArrayList<>();
+        controller.start();
 
-        for (int i = 0; i < WORLDS; i++) {
-
-
-            view.println("Rooms: " + controller.getDatastore().getWorld());
-            controllers.add(controller);
-            controller.start();
+        if (!isSilent) {
             view.printDirection(controller.getDatastore());
-            view.println("Rooms: " + controller.getDatastore().getWorld());
+        }
+        if (!isSilent) {
+            view.println("Rooms after : " + controller.getDatastore().getWorld());
         }
     }
 }

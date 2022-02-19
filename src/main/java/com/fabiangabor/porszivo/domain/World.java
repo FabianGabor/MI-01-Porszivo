@@ -62,7 +62,7 @@ public class World {
         for (Room room : rooms) {
             sb.append(room);
         }
-        sb.append(String.format("%n"));
+        //sb.append(String.format("%n"));
         return sb.toString();
     }
 }
