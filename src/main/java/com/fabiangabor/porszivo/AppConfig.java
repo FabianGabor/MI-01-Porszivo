@@ -22,8 +22,6 @@ import java.util.Random;
 @ComponentScan(basePackages = "com.fabiangabor.porszivo")
 public class AppConfig {
 
-    private static final Logger LOG = LoggerFactory.getLogger(AppConfig.class);
-
     @Bean
     App app() {
         return new App();
@@ -57,6 +55,7 @@ public class AppConfig {
     Random r = new Random();
 
     @Bean
+    @Scope("prototype")
     int roomNumber() {
         if (randomRoom)
             return r.nextInt(worldSize);
