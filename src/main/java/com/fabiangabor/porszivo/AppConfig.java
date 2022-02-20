@@ -14,29 +14,17 @@ import org.springframework.context.annotation.*;
 
 import java.util.Random;
 
-
 @Configuration
 @PropertySource("classpath:config.properties")
 @ComponentScan(basePackages = "com.fabiangabor.porszivo")
 public class AppConfig {
-    @Value("${vacuum.silent}")
-    private boolean silent;
-
-    @Value("${worlds.count}")
-    private int worldsCount;
-
-    @Value("${world.size}")
-    private int worldSize;
-
-    @Value("${vacuum.randomRoom}")
-    boolean randomRoom;
-
+    @Value("${vacuum.silent}") private boolean silent;
+    @Value("${worlds.count}") private int worldsCount;
+    @Value("${world.size}") private int worldSize;
+    @Value("${vacuum.increasePointsAmount}") private int increasePointsAmount;
+    @Value("${vacuum.decreasePointsAmount}") private int decreasePointsAmount;
+    @Value("${vacuum.randomRoom}") boolean randomRoom;
     Random r = new Random();
-
-    @Value("${vacuum.increasePointsAmount}")
-    private int increasePointsAmount;
-    @Value("${vacuum.decreasePointsAmount}")
-    private int decreasePointsAmount;
 
     @Bean
     boolean isSilent() {
