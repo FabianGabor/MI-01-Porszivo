@@ -15,13 +15,13 @@ public class AppSpring {
     public static void main(String[] args) {
         try (ConfigurableApplicationContext appContext = new AnnotationConfigApplicationContext(AppConfig.class)) {
 
-            App app = appContext.getBean(App.class);
-            View view = appContext.getBean(View.class);
-            List<VacuumController> controllers = new ArrayList<>();
-            Config config = appContext.getBean(Config.class);
+            final App app = appContext.getBean(App.class);
+            final View view = appContext.getBean(View.class);
+            final List<VacuumController> controllers = new ArrayList<>();
+            final Config config = appContext.getBean(Config.class);
 
             for (int i = 0; i < config.getWorldsCount(); i++) {
-                VacuumController controller = appContext.getBean(VacuumController.class);
+                final VacuumController controller = appContext.getBean(VacuumController.class);
                 controllers.add(controller);
                 app.play(controller, view);
             }

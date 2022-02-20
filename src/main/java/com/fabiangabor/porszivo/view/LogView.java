@@ -10,7 +10,7 @@ public class LogView implements View{
 
     @Override
     public void println(Object string) {
-        LOG.info(string.toString());
+        LOG.info("{}", string);
     }
 
     @Override

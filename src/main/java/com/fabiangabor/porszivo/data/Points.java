@@ -7,9 +7,6 @@ import com.fabiangabor.porszivo.service.VacuumController;
 public class Points {
     private int amount;
 
-    public Points() {
-    }
-
     public int getAmount() {
         return amount;
     }
@@ -22,7 +19,7 @@ public class Points {
         this.amount -= amount;
     }
 
-    public static double calcAveragePoints(List<VacuumController> controllers) {
+    public static double calcAveragePoints(final List<VacuumController> controllers) {
         double averagePoints = 0;
 
         for (VacuumController controller : controllers) {

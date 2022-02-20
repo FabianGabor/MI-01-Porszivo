@@ -100,7 +100,7 @@ public class MemoryDatastore implements Datastore {
 
     @Override
     public void addToDirectionHistory(VacuumCommand command) {
-        if (command.toString().equals("CLEAN") || command.toString().equals("STOP")) {
+        if (command.toString().equals(Direction.CLEAN.toString()) || command.toString().equals(Direction.STOP.toString())) {
             directionHistory.add(String.format("%s: %d",
                     command,
                     roomNumber +1

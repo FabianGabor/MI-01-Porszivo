@@ -7,18 +7,24 @@ import com.fabiangabor.porszivo.domain.Direction;
 
 public class Vacuum implements VacuumReceiver {
 
-    public static final int DECREASE_POINTS_AMOUNT = 1;
-    public static final int INCREASE_POINTS_AMOUNT = 3;
+    private int decreasePointsAmount;
+    private int increasePointsAmount;
     private final boolean silent;
-
-    public Vacuum() {
-        this.silent = false;
-    }
 
     public Vacuum(boolean silent) {
         this.silent = silent;
+        //this.decreasePointsAmount = 1;
+        //this.increasePointsAmount = 3;
+
     }
 
+    public Vacuum(boolean silent, int decreasePointsAmount, int increasePointsAmount) {
+        this(silent);
+        this.decreasePointsAmount = decreasePointsAmount;
+        this.increasePointsAmount = increasePointsAmount;
+    }
+
+    @Override
     public boolean isSilent() {
         return silent;
     }
@@ -29,7 +35,7 @@ public class Vacuum implements VacuumReceiver {
         datastore.addToCommandHistory(command);
         datastore.addToDirectionHistory(command);
         datastore.increaseRoomNumber(direction.getVal());
-        datastore.decreasePoints(1);
+        datastore.decreasePoints(decreasePointsAmount);
     }
 
     @Override
@@ -38,7 +44,7 @@ public class Vacuum implements VacuumReceiver {
         datastore.addToCommandHistory(command);
         datastore.addToDirectionHistory(command);
         datastore.increaseRoomNumber(direction.getVal());
-        datastore.decreasePoints(DECREASE_POINTS_AMOUNT);
+        datastore.decreasePoints(decreasePointsAmount);
     }
 
     @Override
@@ -46,7 +52,7 @@ public class Vacuum implements VacuumReceiver {
         datastore.setRoomClean();
         datastore.addToCommandHistory(command);
         datastore.addToDirectionHistory(command);
-        datastore.increasePoints(INCREASE_POINTS_AMOUNT);
+        datastore.increasePoints(increasePointsAmount);
     }
 
     @Override

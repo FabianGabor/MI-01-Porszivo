@@ -38,10 +38,10 @@ public class VacuumController {
 
     private void cleanIfNeededOrStopIfAllRoomsAreClean() {
         while (notDone()) {
-            if (!datastore.getWorld().isRoomClean(datastore.getRoomNumber())) {
-                clean.execute();
-            } else {
+            if (datastore.getWorld().isRoomClean(datastore.getRoomNumber())) {
                 moveToOtherRoom();
+            } else {
+                clean.execute();
             }
         }
     }

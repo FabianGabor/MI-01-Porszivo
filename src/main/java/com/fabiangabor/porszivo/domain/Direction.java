@@ -3,7 +3,8 @@ package com.fabiangabor.porszivo.domain;
 public enum Direction {
     LEFT(-1),
     RIGHT(1),
-    STOP(0);
+    STOP(0),
+    CLEAN(0);
 
     private final int val;
 
