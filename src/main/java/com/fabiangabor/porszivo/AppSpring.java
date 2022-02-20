@@ -4,11 +4,9 @@ import com.fabiangabor.porszivo.data.Config;
 import com.fabiangabor.porszivo.data.Points;
 import com.fabiangabor.porszivo.service.VacuumController;
 import com.fabiangabor.porszivo.view.View;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 
