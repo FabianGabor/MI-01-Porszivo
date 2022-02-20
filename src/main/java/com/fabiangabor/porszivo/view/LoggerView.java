@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class LoggerView implements View{
-    private static Logger LOG = LoggerFactory.getLogger(LoggerView.class);
+    private static final Logger LOG = LoggerFactory.getLogger(LoggerView.class);
 
     @Override
     public void println(Object string) {

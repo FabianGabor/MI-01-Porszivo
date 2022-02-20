@@ -6,11 +6,11 @@ import com.fabiangabor.porszivo.view.View;
 import javax.inject.Inject;
 
 
-public class App {
+public final class App {
 
-    @Inject boolean isSilent;
+    @Inject private boolean isSilent;
 
-    void play(VacuumController controller, View view) {
+    public void play(VacuumController controller, View view) {
         if (!isSilent) {
             view.println("Rooms before: " + controller.getDatastore().getWorld());
         }

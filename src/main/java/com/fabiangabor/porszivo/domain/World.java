@@ -1,5 +1,6 @@
 package com.fabiangabor.porszivo.domain;
 
+import com.fabiangabor.porszivo.view.View;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,7 @@ import java.util.Random;
 @Scope("prototype")
 public class World {
     private final List<Room> rooms;
+    private View view;
 
     public World() {
         rooms = new ArrayList<>();
@@ -52,7 +54,7 @@ public class World {
                 addRoom(room);
             }
         } catch (NoSuchAlgorithmException e) {
-            e.printStackTrace();
+            view.println(e);
         }
     }
 
@@ -62,7 +64,6 @@ public class World {
         for (Room room : rooms) {
             sb.append(room);
         }
-        //sb.append(String.format("%n"));
         return sb.toString();
     }
 }

@@ -22,26 +22,31 @@ public class AppConfig {
     @Value("${vacuum.silent}")
     private boolean silent;
 
-    @Bean
-    boolean isSilent() {
-        return silent;
-    }
-
     @Value("${worlds.count}")
-    int worldsCount;
+    private int worldsCount;
 
     @Value("${world.size}")
-    int worldSize;
-
-    @Bean
-    Config config() {
-        return new Config(silent, worldsCount, worldSize);
-    }
+    private int worldSize;
 
     @Value("${vacuum.randomRoom}")
     boolean randomRoom;
 
     Random r = new Random();
+
+    @Value("${vacuum.increasePointsAmount}")
+    private int increasePointsAmount;
+    @Value("${vacuum.decreasePointsAmount}")
+    private int decreasePointsAmount;
+
+    @Bean
+    boolean isSilent() {
+        return silent;
+    }
+
+    @Bean
+    Config config() {
+        return new Config(silent, worldsCount, worldSize);
+    }
 
     @Bean
     App app() {
@@ -67,15 +72,16 @@ public class AppConfig {
 
     @Bean
     VacuumReceiver vacuumReceiver() {
-        return new Vacuum(config().isSilent());
+        return new Vacuum(config().isSilent(), decreasePointsAmount, increasePointsAmount);
     }
 
     @Bean
     @Scope("prototype")
     int roomNumber() {
-        if (randomRoom)
+        if (randomRoom) {
             return r.nextInt(config().getRoomCount());
-        else
+        } else {
             return 0;
+        }
     }
 }
