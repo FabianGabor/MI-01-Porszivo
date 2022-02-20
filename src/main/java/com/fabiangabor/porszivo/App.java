@@ -22,6 +22,7 @@ public class App {
         }
         if (!isSilent) {
             view.println("Rooms after : " + controller.getDatastore().getWorld());
+            view.println("========================================");
         }
     }
 }
