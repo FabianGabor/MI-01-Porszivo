@@ -21,6 +21,29 @@ import java.util.Random;
 @PropertySource("classpath:config.properties")
 @ComponentScan(basePackages = "com.fabiangabor.porszivo")
 public class AppConfig {
+    @Value("${vacuum.silent}")
+    private boolean silent;
+
+    @Bean
+    boolean isSilent() {
+        return silent;
+    }
+
+    @Value("${worlds.count}")
+    int worldsCount;
+
+    @Value("${world.size}")
+    int worldSize;
+
+    @Bean
+    Config config() {
+        return new Config(silent, worldsCount, worldSize);
+    }
+
+    @Value("${vacuum.randomRoom}")
+    boolean randomRoom;
+
+    Random r = new Random();
 
     @Bean
     App app() {
@@ -41,44 +64,20 @@ public class AppConfig {
     @Bean
     @Scope("prototype")
     Datastore datastore() {
-        return new MemoryDatastore(new WorldFactory().create(worldSize), roomNumber());
+        return new MemoryDatastore(new WorldFactory().create(config().getRoomCount()), roomNumber());
     }
 
     @Bean
     VacuumReceiver vacuumReceiver() {
-        return new Vacuum(silent);
+        return new Vacuum(config().isSilent());
     }
-
-    @Value("${vacuum.randomRoom}")
-    boolean randomRoom;
-
-    Random r = new Random();
 
     @Bean
     @Scope("prototype")
     int roomNumber() {
         if (randomRoom)
-            return r.nextInt(worldSize);
+            return r.nextInt(config().getRoomCount());
         else
             return 0;
-    }
-
-    @Value("${vacuum.silent}")
-    private boolean silent;
-
-    @Bean
-    boolean isSilent() {
-        return silent;
-    }
-
-    @Value("${worlds.count}")
-    int worldsCount;
-
-    @Value("${world.size}")
-    int worldSize;
-
-    @Bean
-    Config config() {
-        return new Config(silent, worldsCount, worldSize);
     }
 }
