@@ -4,10 +4,6 @@ import com.fabiangabor.porszivo.commands.*;
 import com.fabiangabor.porszivo.data.Datastore;
 import com.fabiangabor.porszivo.domain.Direction;
 
-import javax.inject.Inject;
-
-@Component
-@Scope("prototype")
 public class VacuumController {
     private final Datastore datastore;
 
@@ -24,6 +20,7 @@ public class VacuumController {
         moveRight = new VacuumMoveRight(vacuum, datastore);
         clean = new VacuumClean(vacuum, datastore);
         stop = new VacuumStop(vacuum, datastore);
+    }
 
     public VacuumController(VacuumReceiver vacuum, Datastore dataStore, int roomNumber) {
         this(vacuum, dataStore);
